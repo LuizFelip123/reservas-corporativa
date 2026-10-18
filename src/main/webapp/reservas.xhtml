@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="titulo">Gerenciar reservas</ui:define>
+    <ui:define name="conteudo">
+        <p class="eyebrow">GESTÃO</p>
+        <h1>
+            <h:outputText value="#{loginBean.admin ? 'Reservas da equipe' : 'Minhas reservas'}" />
+        </h1>
+        <p class="subtitulo">Acompanhe as solicitações e cancele para liberar o horário. A aprovação é feita pelo administrador.</p>
+        <h:messages styleClass="mensagens" />
+        <section class="card tabela">
+            <h:panelGroup rendered="#{empty reservasBean.reservas}" layout="block">
+                <h2>Nenhuma reserva por aqui</h2>
+                <p>As solicitações aparecerão nesta tela.</p>
+                <h:link outcome="/nova-reserva" value="Criar primeira reserva" styleClass="botao" />
+            </h:panelGroup>
+            <h:form id="gestao">
+                <input type="hidden" name="csrfToken" value="#{loginBean.csrfToken}" />
+                <h:dataTable value="#{reservasBean.reservas}" var="reserva" rendered="#{not empty reservasBean.reservas}">
+                    <h:column>
+                        <f:facet name="header">Recurso</f:facet>
+                        <h:outputText value="#{reservasBean.nomeRecurso(reserva.recursoId)}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Solicitante</f:facet>
+                        <h:outputText value="#{reserva.solicitante}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Período</f:facet>
+                        <h:outputText value="#{reserva.inicio.replace('T', ' ')}" />
+                        <br />
+                        <h:outputText value="#{reserva.fim.replace('T', ' ')}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Situação</f:facet>
+                        <h:outputText value="#{reserva.status}" styleClass="status #{reserva.status}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+                        <div class="acoes">
+                            <h:commandButton value="Aprovar" action="#{reservasBean.aprovar(reserva.id)}" rendered="#{loginBean.admin and reserva.status eq 'PENDENTE'}" />
+                            <h:commandButton value="Cancelar" action="#{reservasBean.cancelar(reserva.id)}" rendered="#{reserva.status ne 'CANCELADA'}" styleClass="secundario" />
+                        </div>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>

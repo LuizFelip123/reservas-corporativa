@@ -1,0 +1,25 @@
+<server description="Reservas corporativas local">
+    <featureManager>
+        <feature>restfulWS-3.1</feature>
+        <feature>jsonb-3.0</feature>
+        <feature>cdi-4.0</feature>
+        <feature>faces-4.0</feature>
+        <feature>persistence-3.1</feature>
+        <feature>jdbc-4.3</feature>
+        <feature>enterpriseBeansLite-4.0</feature>
+    </featureManager>
+    <variable name="DB_HOST" defaultValue="localhost" />
+    <variable name="DB_PORT" defaultValue="3306" />
+    <variable name="DB_NAME" defaultValue="reservas_corporativas" />
+    <variable name="DB_USER" defaultValue="root" />
+    <library id="MySQLDriver">
+        <fileset dir="${server.config.dir}/jdbc" includes="mysql-connector-j-*.jar" />
+    </library>
+    <dataSource id="ReservasDS" jndiName="jdbc/ReservasDS" type="javax.sql.DataSource" isolationLevel="TRANSACTION_READ_COMMITTED">
+        <jdbcDriver libraryRef="MySQLDriver" javax.sql.DataSource="com.mysql.cj.jdbc.MysqlDataSource" />
+        <properties serverName="${DB_HOST}" portNumber="${DB_PORT}" databaseName="${DB_NAME}" user="${DB_USER}" password="${DB_PASSWORD}" sslMode="PREFERRED" allowPublicKeyRetrieval="true" serverTimezone="America/Sao_Paulo" />
+        <connectionManager maxPoolSize="10" minPoolSize="1" connectionTimeout="10s" />
+    </dataSource>
+    <httpEndpoint id="defaultHttpEndpoint" host="localhost" httpPort="9080" httpsPort="9443" />
+    <webApplication location="reservas.war" contextRoot="/reservas" />
+</server>

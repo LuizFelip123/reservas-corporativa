@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html" template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="titulo">Visão geral · Reservas</ui:define>
+    <ui:define name="conteudo">
+        <p class="eyebrow">ESPAÇOS E RECURSOS</p>
+        <h1>Organize o próximo encontro.</h1>
+        <p class="subtitulo">Consulte recursos e reserve o que sua equipe precisa.</p>
+        <section class="metricas">
+            <article>
+                <span>Recursos cadastrados</span>
+                <strong>#{reservasBean.recursos.size()}</strong>
+            </article>
+            <article>
+                <span>Aguardando aprovação</span>
+                <strong>#{reservasBean.pendentes}</strong>
+            </article>
+            <article>
+                <span>Reservas aprovadas</span>
+                <strong>#{reservasBean.aprovadas}</strong>
+            </article>
+        </section>
+        <section class="card">
+            <h2>Comece por aqui</h2>
+            <p>Consulte um horário e solicite sua reserva. Administradores também podem cadastrar salas e equipamentos.</p>
+            <div class="acoes">
+                <h:link outcome="/nova-reserva" value="Solicitar reserva" styleClass="botao" />
+                <h:link outcome="/recursos" value="Ver recursos" styleClass="botao secundario" rendered="#{loginBean.admin}" />
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>

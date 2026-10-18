@@ -1,0 +1,34 @@
+<!DOCTYPE html []>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" lang="pt-BR">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+            <ui:insert name="titulo">Reservas corporativas</ui:insert>
+        </title>
+        <h:outputStylesheet library="css" name="app.css" />
+    </h:head>
+    <h:body>
+        <header>
+            <div class="marca">RC <span>Reservas corporativas</span></div>
+            <nav aria-label="Navegação principal">
+                <h:link outcome="/index" value="Visão geral" />
+                <h:link outcome="/recursos" value="Salas e equipamentos" rendered="#{loginBean.admin}" />
+                <h:link outcome="/nova-reserva" value="Nova reserva" />
+                <h:link outcome="/reservas" value="#{loginBean.admin ? 'Gerenciar reservas' : 'Minhas reservas'}" />
+            </nav>
+            <div class="usuario-sessao">
+                <span>
+                    <h:outputText value="#{loginBean.usuario.nome}" /> ·
+                    <h:outputText value="#{loginBean.admin ? 'Administrador' : 'Funcionário'}" /></span>
+                <h:form id="logout">
+                    <input type="hidden" name="csrfToken" value="#{loginBean.csrfToken}" />
+                    <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="secundario" />
+                </h:form>
+            </div>
+        </header>
+        <main>
+            <ui:insert name="conteudo" />
+        </main>
+        <footer>Ambiente de estudo · Dados no MySQL · Acesso por perfil</footer>
+    </h:body>
+</html>

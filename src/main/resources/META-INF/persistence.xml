@@ -1,0 +1,15 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.1">
+    <persistence-unit name="reservasPU" transaction-type="JTA">
+        <jta-data-source>jdbc/ReservasDS</jta-data-source>
+        <class>br.com.estudo.reservas.model.Usuario</class>
+        <class>br.com.estudo.reservas.model.Recurso</class>
+        <class>br.com.estudo.reservas.model.Reserva</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+            <property name="eclipselink.ddl-generation.output-mode" value="database" />
+            <property name="eclipselink.target-database" value="MySQL" />
+            <property name="eclipselink.cache.shared.default" value="false" />
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="titulo">Recursos · Reservas</ui:define>
+    <ui:define name="conteudo">
+        <p class="eyebrow">CADASTRO</p>
+        <h1>Salas e equipamentos</h1>
+        <h:messages styleClass="mensagens" />
+        <div class="colunas">
+            <section class="card">
+                <h2>Novo recurso</h2>
+                <h:form id="cadastro">
+                    <input type="hidden" name="csrfToken" value="#{loginBean.csrfToken}" />
+                    <h:outputLabel for="nome" value="Nome do recurso" />
+                    <h:inputText id="nome" value="#{reservasBean.nome}" required="true" requiredMessage="Informe o nome do recurso." maxlength="120" />
+                    <h:outputLabel for="tipo" value="Tipo" />
+                    <h:selectOneMenu id="tipo" value="#{reservasBean.tipo}">
+                        <f:selectItem itemValue="SALA" itemLabel="Sala" />
+                        <f:selectItem itemValue="EQUIPAMENTO" itemLabel="Equipamento" />
+                    </h:selectOneMenu>
+                    <h:commandButton value="Cadastrar recurso" action="#{reservasBean.cadastrar}" />
+                </h:form>
+            </section>
+            <section class="card tabela">
+                <h2>Recursos disponíveis</h2>
+                <h:dataTable value="#{reservasBean.recursos}" var="recurso">
+                    <h:column>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputText value="#{recurso.nome}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Tipo</f:facet>
+                        <h:outputText value="#{recurso.tipo eq 'SALA' ? 'Sala' : 'Equipamento'}" />
+                    </h:column>
+                </h:dataTable>
+            </section>
+        </div>
+    </ui:define>
+</ui:composition>

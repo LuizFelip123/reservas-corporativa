@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="jakarta.faces.facelets" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:p="jakarta.faces.passthrough" template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="titulo">Nova reserva · Reservas</ui:define>
+    <ui:define name="conteudo">
+        <p class="eyebrow">AGENDAMENTO</p>
+        <h1>Solicitar uma reserva</h1>
+        <p class="subtitulo">Reservas pendentes e aprovadas bloqueiam o horário do recurso.</p>
+        <h:messages styleClass="mensagens" />
+        <section class="card formulario">
+            <h:form id="reserva">
+                <input type="hidden" name="csrfToken" value="#{loginBean.csrfToken}" />
+                <h:outputLabel for="recurso" value="Sala ou equipamento" />
+                <h:selectOneMenu id="recurso" value="#{reservasBean.recursoId}" required="true" requiredMessage="Selecione um recurso.">
+                    <f:selectItem itemLabel="Selecione um recurso" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{reservasBean.recursos}" var="r" itemValue="#{r.id}" itemLabel="#{r.nome}" />
+                </h:selectOneMenu>
+                <h:outputLabel for="solicitante" value="Solicitante autenticado" />
+                <h:outputText id="solicitante" value="#{reservasBean.solicitante}" />
+                <div class="colunas">
+                    <div>
+                        <h:outputLabel for="inicio" value="Início" />
+                        <h:inputText id="inicio" value="#{reservasBean.inicio}" p:type="datetime-local" required="true" requiredMessage="Informe o início." />
+                    </div>
+                    <div>
+                        <h:outputLabel for="fim" value="Fim" />
+                        <h:inputText id="fim" value="#{reservasBean.fim}" p:type="datetime-local" required="true" requiredMessage="Informe o fim." />
+                    </div>
+                </div>
+                <p class="ajuda">Utilize o horário local da empresa. O fim deve ser posterior ao início.</p>
+                <div class="acoes">
+                    <h:commandButton value="Consultar disponibilidade" action="#{reservasBean.consultar}" styleClass="secundario" />
+                    <h:commandButton value="Solicitar reserva" action="#{reservasBean.reservar}" />
+                </div>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>

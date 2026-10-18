@@ -1,0 +1,30 @@
+<!DOCTYPE html []>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:p="jakarta.faces.passthrough" lang="pt-BR">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Entrar · Reservas corporativas</title>
+        <h:outputStylesheet library="css" name="app.css" />
+    </h:head>
+    <h:body styleClass="pagina-login">
+        <main class="login-container">
+            <p class="eyebrow">RESERVAS CORPORATIVAS</p>
+            <h1>Bem-vindo de volta.</h1>
+            <p class="subtitulo">Entre para consultar recursos e acompanhar suas reservas.</p>
+            <section class="card">
+                <h2>Acesse sua conta</h2>
+                <h:messages styleClass="mensagens" />
+                <h:form id="login">
+                    <input type="hidden" name="csrfToken" value="#{loginBean.csrfToken}" />
+                    <h:outputLabel for="usuario" value="Usuário" />
+                    <h:inputText id="usuario" value="#{loginBean.login}" required="true" requiredMessage="Informe seu usuário." maxlength="80" p:autocomplete="username" />
+                    <h:outputLabel for="senha" value="Senha" />
+                    <h:inputSecret id="senha" value="#{loginBean.senha}" required="true" requiredMessage="Informe sua senha." maxlength="128" p:autocomplete="current-password" redisplay="false" />
+                    <div class="acoes">
+                        <h:commandButton value="Entrar" action="#{loginBean.entrar}" />
+                    </div>
+                </h:form>
+            </section>
+            <p class="ajuda">Utilize uma das contas de estudo informadas no README do projeto.</p>
+        </main>
+    </h:body>
+</html>

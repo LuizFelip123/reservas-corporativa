@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Executar reservas",
+      "type": "shell",
+      "command": "powershell -NoProfile -File ./scripts/iniciar.ps1",
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Compilar projeto",
+      "type": "shell",
+      "command": "mvn clean package",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}
